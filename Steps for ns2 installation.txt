@@ -1,0 +1,96 @@
+To make screen fit the windows
+========================
+- sudo apt update
+- sudo apt install build-essential dkms linux-headers-$(uname -r)
+- sudo mount /dev/cdrom /media/cdrom
+- sudo sh /media/cdrom/VBoxLinuxAdditions.run
+
+- sudo reboot
+
+Pre-requisites
+============
+1)
+- sudo apt update
+- sudo apt install build-essential autoconf automake libxmu-dev
+ 
+2) Requirements of ns2
+gcc-4.8
+g++-4.8 # So make some change in gedit file
+
+- sudo gedit /etc/apt/sources.list.d/ubuntu.sources
+
+{{{ #if file is empty,check the following, 
+- ls -l /etc/apt/sources.list
+ or we can view file using
+- sudo cat /etc/apt/sources.list }}}
+
+# The gedit file opens, make the following changes
+
+Types: deb
+URIs: http://in.archive.ubuntu.com/ubuntu/
+Suites: noble noble-updates noble-backports Components: main restricted universe multiverse
+Signed-By: /usr/share/keyrings/ubuntu-archive keyring.gpg
+
+Types: deb
+URIs: http://security.ubuntu.com/ubuntu/
+Suites: noble-security
+Components: main restricted universe multiverse.
+Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+
+Types: deb
+URIs: http://in.archive.ubuntu.com/ubuntu/
+Suites: bionic-updates bionic.
+Components: main universe
+Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+
+# after completing come to terminal
+- sudo apt update
+- sudo apt install build-essential
+- sudo apt install gcc-4.8 g++-4.8
+
+Steps to install NS2
+===============
+
+1) Download ns2.35
+
+2) Extract and keep in home
+
+3) Change the default gcc and g++ to gcc-4.8 and g++-4.8 
+
+#Change @CC@ to gcc-4.8  and @CPP@ to g++-4.8
+#Open the extracted ns2 file
+#Files that need to be changes
+#Right click and open in gedit
+
+ns-allinone-2.35/Makefile.in
+nam-1.15/Makefile.in
+xgraph-12.2/Makefile.in
+ns-2.35/linkstate/ls.h  ( in line no 137, change the line erase to this->erase)
+
+4) Installation
+
+- cd ns-allinone-2.35/
+- ./install
+
+#After installation is completed,some file path will be displayed.
+#First copy the first link /home.../unix comes after "Please put"
+
+- cd
+- gedit .bashrc
+
+#A file will be opened, in line no 4 
+
+>> export PATH=$PATH:/home.."paste the link"
+
+#Secondly copy /home.../lib from "(1) You MUST.."
+#again open the bashrc file
+
+>> export LD_LIBRARY_PATH=/home.."paste the link"
+(change the , to : and remove the space)
+#save the file
+
+#to open the file
+- gedit /home/username/ .bashrc
+
+================
+Installation completed
